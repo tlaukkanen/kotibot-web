@@ -11,6 +11,6 @@ namespace KotibotWeb.Model
         public string Location { get; set; }
         public float Temperature { get; set; }
         public float Humidity { get; set; }
-        public DateTimeOffset DateUpdated { get; set; }        
+        public DateTimeOffset DateUpdated { get; set; } = DateTimeOffset.UtcNow;       
     }    
 }

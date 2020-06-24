@@ -28,10 +28,10 @@ namespace KotibotWeb.Controllers
         [HttpGet]
         public async Task<IEnumerable<Measurement>> Get()
         {
-            long dayAgo = DateTimeOffset.Now.AddDays(-1).Ticks;
+            var now = DateTimeOffset.UtcNow;
 
             var measurements = await _context.Measurements
-                .Where(m => m.DateUpdated.Ticks > dayAgo ).ToArrayAsync();
+                .Where(m => EF.Functions.DateDiffHour(m.DateUpdated, now) < 24 ).ToArrayAsync();
                 
             return measurements;
         }

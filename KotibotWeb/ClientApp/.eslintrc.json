@@ -1,0 +1,38 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "react-hooks" 
+    ],
+    "rules": {
+        "linebreak-style":"off",
+        "semi":["error","never"],
+        "indent":"off",
+        "no-tabs":"off",
+        "react/jsx-filename-extension":"warn",
+        "react/jsx-indent":"off",
+        "react/jsx-indent-props":"off",
+        "react/jsx-wrap-multilines":"off",
+        "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
+        "max-len": ["error", { "code": 120 }]
+    }
+}

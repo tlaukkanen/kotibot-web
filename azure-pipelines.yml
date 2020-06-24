@@ -38,7 +38,7 @@ stages:
     # Create EF Migrations
     - script: dotnet tool install --global dotnet-ef
       displayName: 'Install EF Core tool'
-    - script: dotnet ef migrations script --project ./kotibotApp --idempotent --output $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql
+    - script: dotnet ef migrations script --project ./KotibotWeb --idempotent --output $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql
       displayName: 'Create SQL script for EF migrations'
 
     # Publish (zip)

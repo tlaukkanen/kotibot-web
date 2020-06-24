@@ -1,26 +1,175 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback, useEffect, useState } from 'react'
+import { Grid, createStyles, Theme, Typography, useTheme, makeStyles } from '@material-ui/core'
+import {ResponsiveLine, Serie} from '@nivo/line'
 
-export class Home extends Component {
-  static displayName = Home.name;
 
-  render () {
-    return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
-        <ul>
-          <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-          <li><a href='https://facebook.github.io/react/'>React</a> for client-side code</li>
-          <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-        </ul>
-        <p>To help you get started, we have also set up:</p>
-        <ul>
-          <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-          <li><strong>Development server integration</strong>. In development mode, the development server from <code>create-react-app</code> runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-          <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration produces minified, efficiently bundled JavaScript files.</li>
-        </ul>
-        <p>The <code>ClientApp</code> subdirectory is a standard React application based on the <code>create-react-app</code> template. If you open a command prompt in that directory, you can run <code>npm</code> commands such as <code>npm test</code> or <code>npm install</code>.</p>
-      </div>
-    );
+const styles = makeStyles((theme) => ({
+  chartRoot: {
+      padding: theme.spacing(6),
+      borderRadius: theme.spacing(2),
+      backgroundColor: "white",
+      width: 620,
+      height: 240,
+      border: "1px solid rgba(0,0,0,0.15)",
+      transition: "box-shadow 0.3s ease-in-out",
+      "&:hover": {
+          border: "1px solid " + theme.palette.primary.main,
+          boxShadow: "0px 5px 15px rgba(0,0,0,0.1)"
+      }
+  },
+  toolTip: {
+      backgroundColor: "white",
+      border: "2px solid " + theme.palette.primary.main,
+      borderRadius: theme.spacing(2),
+      padding: theme.spacing(2),
+      fontFamily: "Helvetica",
+      fontSize: 12,
+      color: theme.palette.primary.main,
+      fontWeight: "bold",
+      boxShadow: "0px 5px 15px rgba(0,0,0,0.1)",
+      marginBottom: theme.spacing(2),
   }
+}))
+
+
+
+
+const Home = () => {
+  const theme = useTheme();
+ 
+    
+  const classes = styles();
+  const light = theme.palette.primary.main;
+  const dark = theme.palette.primary.dark;
+  const [series, setSeries] = useState([])
+  
+  const loadSeriesData = () => {
+    const url = '/measurements'
+    fetch(url)
+    .then((response) => {
+      if(response.ok) {
+        return response.json()
+      }
+      console.log("Error")
+    }).then((data) => {
+      console.log(JSON.stringify(data))
+
+      setSeries([{
+        id: 'Temperature',
+        data: data.map((reading) => {
+          return {
+            x: reading.dateUpdated,
+            y: reading.temperature
+          }
+        })
+      }])
+    })
+  }
+
+  useEffect(() => {
+    loadSeriesData()
+  })
+
+  const chartTheme = useCallback(() => {
+    return {
+        grid: {
+            line: {
+                stroke: "rgba(0,0,0,0.05)",
+            }
+        },
+        axis: {
+            legend: {
+                text: {
+                    fill: dark,
+                    fontSize: 12,
+                }
+            },
+            ticks: {
+                text: {
+                    fill: "rgba(0,0,0,0.3)",
+                    fontSize: 12,
+                },
+                line: {
+                    stroke: "rgba(0,0,0,0.3)",
+                    strokeWidth: 1,
+                }
+            },
+            domain: {
+                line: {
+                    stroke: "rgba(0,0,0,0.1)",
+                    strokeWidth: 1,
+                }
+            },
+        },
+        crosshair: {
+            line: {
+                stroke: 'rgba(0,0,0,0.5)',
+                strokeWidth: 1,
+                strokeOpacity: 0.35,
+            },
+        }
+    }
+}, []);
+  
+const yScale = {
+      type: "linear",
+      min: 0,
+      max: 35,
+};
+
+const xScale = {
+  type: "time",
+  precision: "hour",
+  format: "%Y-%m-%dT%H:%M:%S.%L%Z",
+};
+
+const axisBottom = {
+  format: "%H:%M",
+  tickValues: 5,
+};
+
+const axisLeft = {
+  legend: "Temperature",
+  legendOffset: -32,
+  legendPosition: "middle",
+  tickSize: 0,
+  tickValues: 2,
+  tickPadding: 4,
+};
+
+let margin = {
+  top: 10,
+  right: 0,
+  bottom: 30,
+  left: 40
+};
+
+  return (
+    <div>
+      <Typography variant="h3">Home Office Temperature 🥵</Typography>
+      <Grid container>
+        <Grid item className={classes.chartRoot}>
+
+          <ResponsiveLine
+              curve={"monotoneX"}
+              data={series}
+              theme={chartTheme()}
+              colors={[dark]}
+              margin={margin}
+              yScale={yScale}
+              xScale={xScale}
+              xFormat="time:%Y-%m-%dT%H:%M:%S.%L%Z"
+              axisBottom={axisBottom}
+              axisLeft={axisLeft}
+              lineWidth={1}
+              pointSize={0}
+              useMesh={true}
+          />
+        </Grid>
+      </Grid>
+    </div>
+  )
+
 }
+
+export default Home
