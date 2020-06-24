@@ -82,7 +82,7 @@ stages:
             - task: SqlAzureDacpacDeployment@1
               displayName: 'Apply database schema changes'
               inputs:
-                azureSubscription: 'sc-kotibot-dev'
+                azureSubscription: 'sc-kotibot'
                 ServerName: '$(SqlServerName).database.windows.net'
                 DatabaseName: '$(DbName)'
                 SqlUsername: '$(DbLogin)'
