@@ -2,8 +2,44 @@ import React, { Component, useCallback, useEffect, useState } from 'react'
 import { Grid, createStyles, Theme, Typography, useTheme, makeStyles } from '@material-ui/core'
 import {ResponsiveLine, Serie} from '@nivo/line'
 
-
+// #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
+  page: {
+    position: 'absolute',
+    [theme.breakpoints.down('xs')]: {
+        margin: '0 !important',
+        left: '0',
+        minWidth: '320px',
+        width: '100%',
+    },
+    [theme.breakpoints.up('sm')]: {
+        left: '50%',
+        transform: 'translateX(-50%)',
+    },
+    top: '60px',
+    backgroundColor: '#0B486B',
+    color: '#CFF09E',
+},
+listContainer: {
+    borderRadius: '2px',
+    [theme.breakpoints.down('xs')]: {
+        width: '100%',
+        minWidth: '320px',
+    },
+    [theme.breakpoints.up('sm')]: {
+        width: '600px',
+    },
+    backgroundColor: '#FFF',
+    margin: '0 !important',
+    boxShadow: '0px 3px 6px #00000029',
+    padding: '2em',
+},
+container: {
+    width: '100%',
+    backgroundColor: '#FFF',
+
+},
+
   chartRoot: {
       padding: theme.spacing(6),
       borderRadius: theme.spacing(2),
@@ -58,7 +94,7 @@ const Home = () => {
         id: 'Temperature',
         data: data.map((reading) => {
           return {
-            x: reading.dateUpdated,
+            x: new Date(reading.dateUpdated),
             y: reading.temperature
           }
         })
@@ -120,7 +156,7 @@ const yScale = {
 const xScale = {
   type: "time",
   precision: "hour",
-  format: "%Y-%m-%dT%H:%M:%S.%L%Z",
+  format: "native",
 };
 
 const axisBottom = {
@@ -145,9 +181,9 @@ let margin = {
 };
 
   return (
-    <div>
-      <Typography variant="h3">Home Office Temperature 🥵</Typography>
-      <Grid container>
+    <div className={classes.page}>
+      <Typography variant="caption">Home Office Temperature 🥵</Typography>
+      <Grid container className={classes.container}>
         <Grid item className={classes.chartRoot}>
 
           <ResponsiveLine
