@@ -1,0 +1,91 @@
+trigger:
+  branches:
+    include:
+    - master
+
+resources:
+- repo: self
+
+variables:
+- group: vg-kotibot-dev
+- name: tag
+  value: '$(Build.BuildId)'
+- name: imageName
+  value: 'kotibot:$(build.buildNumber)'
+- name: buildConfiguration
+  value: 'Release'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'    
+    steps:
+        
+    - task: UseDotNet@2 
+      displayName: ".NET Core 3.1.x"
+      inputs:
+        version: '3.1.x'
+        packageType: sdk
+        
+    # Build
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
+      
+    # Create EF Migrations
+    - script: dotnet tool install --global dotnet-ef
+      displayName: 'Install EF Core tool'
+    - script: dotnet ef migrations script --project ./kotibotApp --idempotent --output $(Build.ArtifactStagingDirectory)/sql/update_to_latest.sql
+      displayName: 'Create SQL script for EF migrations'
+
+    # Publish (zip)
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish the project - Release'
+      inputs:
+        command: 'publish'
+        projects: 'KotibotWeb/*.csproj'
+        publishWebProjects: false
+        arguments: '--no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/Release'
+        zipAfterPublish: true
+
+    # Publish package (zip)
+    - publish: '$(Build.ArtifactStagingDirectory)'
+      artifact: drop
+      condition: succeeded()
+      
+- stage: 'Deploy'
+  displayName: 'Deploy to DEV environment'
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) 
+  jobs:
+  - deployment: Deploy
+    pool:
+      vmImage: 'windows-latest'
+    environment: dev
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: current
+              artifact: drop
+
+            - task: AzureWebApp@1
+              displayName: 'Azure App Service Deploy: website'
+              inputs:
+                azureSubscription: 'sc-kotibot-dev'
+                appName: 'kotibot-dev'
+                package: '$(Pipeline.Workspace)/**/KotibotWeb.zip'
+
+            - task: SqlAzureDacpacDeployment@1
+              displayName: 'Apply database schema changes'
+              inputs:
+                azureSubscription: 'sc-kotibot-dev'
+                ServerName: '$(SqlServerName).database.windows.net'
+                DatabaseName: '$(DbName)'
+                SqlUsername: '$(DbLogin)'
+                SqlPassword: '$(DbPassword)'
+                deployType: SqlTask
+                SqlFile: '$(Pipeline.Workspace)/drop/sql/update_to_latest.sql'
