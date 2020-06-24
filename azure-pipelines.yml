@@ -75,8 +75,8 @@ stages:
             - task: AzureWebApp@1
               displayName: 'Azure App Service Deploy: website'
               inputs:
-                azureSubscription: 'sc-kotibot-dev'
-                appName: 'kotibot-dev'
+                azureSubscription: 'sc-kotibot'
+                appName: 'kotibot'
                 package: '$(Pipeline.Workspace)/**/KotibotWeb.zip'
 
             - task: SqlAzureDacpacDeployment@1
