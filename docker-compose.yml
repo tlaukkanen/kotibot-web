@@ -1,0 +1,13 @@
+version: "3.2"
+
+services:
+  db:
+    image: sql-server
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "1413:1433"
+    environment:
+      SA_PASSWORD: "DevDatabase123"
+      ACCEPT_EULA: "Y"
