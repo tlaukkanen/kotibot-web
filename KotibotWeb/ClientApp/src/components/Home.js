@@ -1,5 +1,5 @@
 import React, { Component, useCallback, useEffect, useState } from 'react'
-import { Grid, createStyles, Theme, Typography, useTheme, makeStyles } from '@material-ui/core'
+import { Grid, createStyles, Theme, Typography, useTheme, makeStyles, Box } from '@material-ui/core'
 import {ResponsiveLine, Serie} from '@nivo/line'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
@@ -17,7 +17,7 @@ const styles = makeStyles((theme) => ({
         transform: 'translateX(-50%)',
     },
     top: '60px',
-    backgroundColor: '#0B486B',
+    backgroundColor: '#3B8686',
     color: '#CFF09E',
 },
 listContainer: {
@@ -36,8 +36,6 @@ listContainer: {
 },
 container: {
     width: '100%',
-    backgroundColor: '#FFF',
-
 },
 
   chartRoot: {
@@ -45,8 +43,8 @@ container: {
       borderRadius: theme.spacing(2),
       backgroundColor: "white",
       width: 620,
-      height: 240,
-      border: "1px solid rgba(0,0,0,0.15)",
+      height: 340,
+      border: "1px solid #0B486B",
       transition: "box-shadow 0.3s ease-in-out",
       "&:hover": {
           border: "1px solid " + theme.palette.primary.main,
@@ -149,7 +147,7 @@ const Home = () => {
   
 const yScale = {
       type: "linear",
-      min: 0,
+      min: 15,
       max: 35,
 };
 
@@ -165,7 +163,7 @@ const axisBottom = {
 };
 
 const axisLeft = {
-  legend: "Temperature",
+  legend: "Temperature °C",
   legendOffset: -32,
   legendPosition: "middle",
   tickSize: 0,
@@ -182,8 +180,11 @@ let margin = {
 
   return (
     <div className={classes.page}>
-      <Typography variant="caption">Home Office Temperature 🥵</Typography>
       <Grid container className={classes.container}>
+        <Grid item container justify="center" alignItems="center" direction="column">
+          <Typography variant="h4">Home Office Temperature 🥵</Typography>
+          <Box m={2} />
+        </Grid>
         <Grid item className={classes.chartRoot}>
 
           <ResponsiveLine
@@ -201,6 +202,10 @@ let margin = {
               pointSize={0}
               useMesh={true}
           />
+        </Grid>
+        <Grid item container justify="center" alignItems="center" direction="column">
+          <Box m={2} />
+          <span>Copyright &copy; Tommi Laukkanen</span>
         </Grid>
       </Grid>
     </div>
