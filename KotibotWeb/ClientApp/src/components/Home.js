@@ -62,13 +62,12 @@ const styles = makeStyles((theme) => ({
 
 
 const Home = () => {
-  const theme = useTheme();
- 
-    
+  const theme = useTheme();    
   const classes = styles();
   const light = theme.palette.primary.main;
   const dark = theme.palette.primary.dark;
   const [series, setSeries] = useState([])
+  const [currentTemperature, setCurrentTemperature] = useState()
   
   const loadSeriesData = () => {
     const url = '/measurements'
@@ -90,6 +89,10 @@ const Home = () => {
           }
         })
       }])
+
+      // Get last value as current temperature
+      const lastItem = data.pop();
+      setCurrentTemperature(lastItem.temperature)
     })
   }
 
@@ -175,7 +178,9 @@ let margin = {
     <div className={classes.page}>
       <Grid container className={classes.container}>
         <Grid item container justify="center" alignItems="center" direction="column">
-          <Typography variant="h4">Home Office Temperature 🥵</Typography>
+          <Typography variant="h4">Home Office Temperature</Typography>
+          <Box m={2} />
+          <Typography variant="h4">{currentTemperature} °C 🥵</Typography>
           <Box m={2} />
         </Grid>
         <Grid item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
