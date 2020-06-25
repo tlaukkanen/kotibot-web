@@ -38,7 +38,7 @@ const styles = makeStyles((theme) => ({
 
   chartRoot: {
       padding: theme.spacing(4),
-      borderRadius: theme.spacing(2),
+      borderRadius: theme.spacing(1),
       backgroundColor: "#f3ffe2",
       width: '100%',
       minWidth: '320px',
@@ -146,8 +146,8 @@ const Home = () => {
   
 const yScale = {
       type: "linear",
-      min: 18,
-      max: 34,
+      min: 20,
+      max: 32,
 };
 
 const xScale = {
@@ -181,7 +181,7 @@ let margin = {
     <div className={classes.page}>
       <Grid container className={classes.container}>
         <Grid item container justify="center" alignItems="center" direction="column">
-          <Typography variant="h4" className={classes.header}>Home Office Temperature</Typography>
+          <Typography variant="h4" className={classes.header}>Home Office Status</Typography>
           <Box m={2} />
           <Typography variant="h2">{currentTemperature}°C <span role="img" aria-label="Sweating emoji">🥵</span></Typography>
           <Box m={2} />

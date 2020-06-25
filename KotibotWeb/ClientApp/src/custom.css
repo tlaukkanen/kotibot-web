@@ -12,7 +12,7 @@ body {
   margin: 0;
   height: 100%;
   background: rgb(168,219,168);
-  background: linear-gradient(135deg, rgba(168,219,168,1) 0%, rgba(121,189,154,1) 35%, rgba(125,185,232,1) 100%);
+  background: linear-gradient(25deg, rgba(168,219,168,1) 0%, rgba(121,189,154,1) 35%, rgba(125,185,232,1) 100%);
     /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a8dba8', endColorstr='#7db9e8',GradientType=0 );
   */
 }
