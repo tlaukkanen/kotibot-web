@@ -13,7 +13,7 @@ import './custom.css'
 const theme = createMuiTheme({
   palette: {
       primary: {
-          main: '#222222',
+          main: '#3B8686',
       },
       secondary: {
           main: '#79BD9A',
@@ -22,46 +22,8 @@ const theme = createMuiTheme({
           default: '#A8DBA8',
       },
       text: {
-          primary: '#222222',
+          primary: '#3B8686',
           secondary: '#0B486B',
-      },
-  },
-  appBar: {
-      height: 60,
-      background: {
-          default: '#2C2933',
-      },
-      primary: {
-          main: '#FFF',
-      },
-      text: {
-          primary: '#FFF',
-      },
-  },
-  typography: {
-      h3: {
-          textTransform: 'uppercase',
-      },
-      h5: {
-          textTransform: 'uppercase',
-      },
-  },
-  overrides: {
-      MuiInputBase: {
-          input: {
-              color: '#000',
-          },
-      },
-      MuiFormHelperText: {
-          root: {
-              marginBottom: '16px',
-              color: '#00000089',
-          },
-      },
-      MuiFormLabel: {
-          root: {
-              color: '#00000089',
-          },
       },
   },
 })

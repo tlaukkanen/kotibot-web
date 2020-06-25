@@ -19,31 +19,24 @@ const styles = makeStyles((theme) => ({
     top: '60px',
     backgroundColor: '#3B8686',
     color: '#CFF09E',
-},
-listContainer: {
-    borderRadius: '2px',
-    [theme.breakpoints.down('xs')]: {
-        width: '100%',
-        minWidth: '320px',
-    },
-    [theme.breakpoints.up('sm')]: {
-        width: '600px',
-    },
-    backgroundColor: '#FFF',
-    margin: '0 !important',
-    boxShadow: '0px 3px 6px #00000029',
-    padding: '2em',
-},
-container: {
+  },
+  container: {
+      width: '100%',
+  },
+
+  chartContainer: {
     width: '100%',
-},
+    height: '100%',
+    margin: '0 !important',
+  },
 
   chartRoot: {
       padding: theme.spacing(6),
       borderRadius: theme.spacing(2),
       backgroundColor: "white",
-      width: 620,
-      height: 340,
+      width: '100%',
+      minWidth: '320px',
+      height: '340px',
       border: "1px solid #0B486B",
       transition: "box-shadow 0.3s ease-in-out",
       "&:hover": {
@@ -108,7 +101,7 @@ const Home = () => {
     return {
         grid: {
             line: {
-                stroke: "rgba(0,0,0,0.05)",
+                stroke: "rgba(0,0,0,0.04)",
             }
         },
         axis: {
@@ -124,7 +117,7 @@ const Home = () => {
                     fontSize: 12,
                 },
                 line: {
-                    stroke: "rgba(0,0,0,0.3)",
+                    stroke: "#0B486B",
                     strokeWidth: 1,
                 }
             },
@@ -147,8 +140,8 @@ const Home = () => {
   
 const yScale = {
       type: "linear",
-      min: 15,
-      max: 35,
+      min: 18,
+      max: 34,
 };
 
 const xScale = {
@@ -185,23 +178,25 @@ let margin = {
           <Typography variant="h4">Home Office Temperature 🥵</Typography>
           <Box m={2} />
         </Grid>
-        <Grid item className={classes.chartRoot}>
-
-          <ResponsiveLine
-              curve={"monotoneX"}
-              data={series}
-              theme={chartTheme()}
-              colors={[dark]}
-              margin={margin}
-              yScale={yScale}
-              xScale={xScale}
-              xFormat="time:%Y-%m-%dT%H:%M:%S.%L%Z"
-              axisBottom={axisBottom}
-              axisLeft={axisLeft}
-              lineWidth={1}
-              pointSize={0}
-              useMesh={true}
-          />
+        <Grid item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
+          <div className={classes.chartContainer}>
+            <ResponsiveLine
+                curve={"monotoneX"}
+                data={series}
+                theme={chartTheme()}
+                colors={[dark]}
+                margin={margin}
+                yScale={yScale}
+                xScale={xScale}
+                xFormat="time:%H:%M"
+                axisBottom={axisBottom}
+                axisLeft={axisLeft}
+                lineWidth={1}
+                pointSize={2}
+                useMesh={true}
+            />
+          </div>
+          <Box m={1}/>
         </Grid>
         <Grid item container justify="center" alignItems="center" direction="column">
           <Box m={2} />
