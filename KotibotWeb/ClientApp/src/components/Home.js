@@ -19,6 +19,13 @@ const styles = makeStyles((theme) => ({
     top: '60px',
     backgroundColor: '#3B8686',
     color: '#CFF09E',
+    padding: theme.spacing(1)
+  },
+  header: {
+    color: '#CFF09E',
+  },
+  footer: {
+    color: '#0B486B',
   },
   container: {
       width: '100%',
@@ -31,9 +38,9 @@ const styles = makeStyles((theme) => ({
   },
 
   chartRoot: {
-      padding: theme.spacing(6),
+      padding: theme.spacing(4),
       borderRadius: theme.spacing(2),
-      backgroundColor: "white",
+      backgroundColor: "#f3ffe2",
       width: '100%',
       minWidth: '320px',
       height: '340px',
@@ -178,9 +185,9 @@ let margin = {
     <div className={classes.page}>
       <Grid container className={classes.container}>
         <Grid item container justify="center" alignItems="center" direction="column">
-          <Typography variant="h4">Home Office Temperature</Typography>
+          <Typography variant="h4" className={classes.header}>Home Office Temperature</Typography>
           <Box m={2} />
-          <Typography variant="h4">{currentTemperature} °C 🥵</Typography>
+          <Typography variant="h2">{currentTemperature}°C 🥵</Typography>
           <Box m={2} />
         </Grid>
         <Grid item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
@@ -205,7 +212,7 @@ let margin = {
         </Grid>
         <Grid item container justify="center" alignItems="center" direction="column">
           <Box m={2} />
-          <span>Copyright &copy; Tommi Laukkanen</span>
+          <span className={classes.footer}>Copyright &copy; Tommi Laukkanen</span>
         </Grid>
       </Grid>
     </div>
