@@ -1,6 +1,6 @@
-import React, { Component, useCallback, useEffect, useState } from 'react'
-import { Grid, createStyles, Theme, Typography, useTheme, makeStyles, Box } from '@material-ui/core'
-import {ResponsiveLine, Serie} from '@nivo/line'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Grid, Typography, useTheme, makeStyles, Box } from '@material-ui/core'
+import { ResponsiveLine } from '@nivo/line'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
@@ -17,7 +17,6 @@ const styles = makeStyles((theme) => ({
         transform: 'translateX(-50%)',
     },
     top: '60px',
-    backgroundColor: '#3B8686',
     color: '#CFF09E',
     padding: theme.spacing(1)
   },
@@ -71,7 +70,6 @@ const styles = makeStyles((theme) => ({
 const Home = () => {
   const theme = useTheme();    
   const classes = styles();
-  const light = theme.palette.primary.main;
   const dark = theme.palette.primary.dark;
   const [series, setSeries] = useState([])
   const [currentTemperature, setCurrentTemperature] = useState()
@@ -85,8 +83,6 @@ const Home = () => {
       }
       console.log("Error")
     }).then((data) => {
-      console.log(JSON.stringify(data))
-
       setSeries([{
         id: 'Temperature',
         data: data.map((reading) => {
@@ -146,7 +142,7 @@ const Home = () => {
             },
         }
     }
-}, []);
+}, [dark]);
   
 const yScale = {
       type: "linear",
@@ -187,7 +183,7 @@ let margin = {
         <Grid item container justify="center" alignItems="center" direction="column">
           <Typography variant="h4" className={classes.header}>Home Office Temperature</Typography>
           <Box m={2} />
-          <Typography variant="h2">{currentTemperature}°C 🥵</Typography>
+          <Typography variant="h2">{currentTemperature}°C <span role="img" aria-label="Sweating emoji">🥵</span></Typography>
           <Box m={2} />
         </Grid>
         <Grid item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
