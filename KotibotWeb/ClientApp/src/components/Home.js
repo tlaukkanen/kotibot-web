@@ -104,7 +104,7 @@ const Home = () => {
 
   useEffect(() => {
     loadSeriesData()
-  })
+  }, [])
 
   const chartTheme = useCallback(() => {
     return {
