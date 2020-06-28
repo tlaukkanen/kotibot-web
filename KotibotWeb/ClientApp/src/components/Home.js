@@ -108,7 +108,7 @@ const Home = () => {
           })
         }])
 
-        setHumiditySeries([{
+        setPressureSeries([{
           id: 'Pressure',
           data: data.map((reading) => {
             return {
@@ -271,8 +271,8 @@ const Home = () => {
               margin={margin}
               yScale={{
                 type: "linear",
-                min: 0,
-                max: 100,
+                min: 980,
+                max: 1020,
               }}
               xScale={xScale}
               xFormat="time:%H:%M"
