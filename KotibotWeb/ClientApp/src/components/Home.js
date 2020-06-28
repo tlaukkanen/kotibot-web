@@ -70,9 +70,6 @@ const styles = makeStyles((theme) => ({
   }
 }))
 
-
-
-
 const Home = () => {
   const theme = useTheme();
   const classes = styles();
@@ -190,7 +187,7 @@ const Home = () => {
   let margin = {
     top: 10,
     right: 0,
-    bottom: 20,
+    bottom: 25,
     left: 40
   };
 
