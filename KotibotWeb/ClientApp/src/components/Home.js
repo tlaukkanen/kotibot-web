@@ -209,7 +209,7 @@ const Home = () => {
         <Grid item xs={12} container justify="center" alignItems="center" direction="column">          
           <Typography variant="h4" className={classes.header}>Tommi's Home Office</Typography>
           <Box m={2} />
-          <Typography variant="h2">{currentTemperature}°C <span role="img" aria-label="Sweating emoji">🥵</span></Typography>
+          <Typography variant="h2">{currentTemperature.toFixed(1)}°C <span role="img" aria-label="Sweating emoji">🥵</span></Typography>
           <Box m={2} />
         </Grid>
         <Grid xs={4} item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
