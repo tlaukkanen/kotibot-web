@@ -76,6 +76,7 @@ const Home = () => {
   const dark = theme.palette.primary.dark;
   const [series, setSeries] = useState([])
   const [humiditySeries, setHumiditySeries] = useState([])
+  const [pressureSeries, setPressureSeries] = useState([])
   const [currentTemperature, setCurrentTemperature] = useState()
 
   const loadSeriesData = () => {
@@ -107,7 +108,18 @@ const Home = () => {
           })
         }])
 
+        setHumiditySeries([{
+          id: 'Pressure',
+          data: data.map((reading) => {
+            return {
+              x: new Date(reading.dateUpdated),
+              y: reading.pressure
+            }
+          })
+        }])
+        
         // Get last value as current temperature
+        
         const lastItem = data.pop();
         setCurrentTemperature(lastItem.temperature)
       })
@@ -218,7 +230,6 @@ const Home = () => {
               useMesh={true}
             />
           </div>
-          <Box m={1} />
         </Grid>
         <Grid item xs={4} container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
           <div className={classes.chartContainer}>
@@ -238,6 +249,36 @@ const Home = () => {
               axisBottom={axisBottom}
               axisLeft={{
                 legend: "Humidity %",
+                legendOffset: -32,
+                legendPosition: "middle",
+                tickSize: 2,
+                tickValues: 2,
+                tickPadding: 4,
+              }}
+              //lineWidth={1}
+              pointSize={0}
+              useMesh={true}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={4} container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
+          <div className={classes.chartContainer}>
+            <ResponsiveLine
+              curve={"monotoneX"}
+              data={pressureSeries}
+              theme={chartTheme()}
+              colors={[dark]}
+              margin={margin}
+              yScale={{
+                type: "linear",
+                min: 0,
+                max: 100,
+              }}
+              xScale={xScale}
+              xFormat="time:%H:%M"
+              axisBottom={axisBottom}
+              axisLeft={{
+                legend: "Pressure hPa",
                 legendOffset: -32,
                 legendPosition: "middle",
                 tickSize: 2,
