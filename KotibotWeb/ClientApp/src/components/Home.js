@@ -43,7 +43,7 @@ const styles = makeStyles((theme) => ({
 
   chartRoot: {
     padding: theme.spacing(4),
-    margin: theme.spacing(2),
+    margin: theme.spacing(1),
     borderRadius: theme.spacing(1),
     backgroundColor: "#f3ffe2",
     width: '100%',
@@ -130,8 +130,14 @@ const Home = () => {
       })
   }
 
+  const fiveMinutesInMs = 300000;
+
   useEffect(() => {
-    loadSeriesData()
+    loadSeriesData();
+    const interval = setInterval(() => {
+      loadSeriesData();
+    }, fiveMinutesInMs);
+    return () => loadSeriesData(interval);
   }, [])
 
   const chartTheme = useCallback(() => {
@@ -205,7 +211,7 @@ const Home = () => {
     top: 10,
     right: 0,
     bottom: 25,
-    left: 40
+    left: 42
   };
 
   return (
@@ -217,7 +223,7 @@ const Home = () => {
           <Typography variant="h2">{currentTemperature?.toFixed(1)}°C <span role="img" aria-label="Sweating emoji">🥵</span></Typography>
           <Box m={2} />
         </Grid>
-        <Grid xs={4} item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
+        <Grid xs={8} item container justify="center" alignItems="center" direction="column" className={classes.chartRoot}>
           <div className={classes.chartContainer}>
             <ResponsiveLine
               curve={"monotoneX"}
@@ -284,7 +290,7 @@ const Home = () => {
               axisBottom={axisBottom}
               axisLeft={{
                 legend: "Pressure hPa",
-                legendOffset: -32,
+                legendOffset: -36,
                 legendPosition: "middle",
                 tickSize: 2,
                 tickValues: 2,
