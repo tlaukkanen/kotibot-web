@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import Home from './components/Home';
+import React from 'react'
+import { Route } from 'react-router'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import Layout from './components/Layout'
+import Home from './components/Home'
 
 import './custom.css'
 
@@ -28,16 +28,12 @@ const theme = createMuiTheme({
   },
 })
 
-export default class App extends Component {
-  static displayName = App.name;
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Layout>
+      <Route exact path="/" component={Home} />
+    </Layout>
+  </ThemeProvider>
+)
 
-  render () {
-    return (
-      <ThemeProvider theme={theme}>
-        <Layout>
-          <Route exact path='/' component={Home} />
-        </Layout>
-      </ThemeProvider>
-    );
-  }
-}
+export default App

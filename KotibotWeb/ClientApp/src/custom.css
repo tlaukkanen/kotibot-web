@@ -12,6 +12,7 @@ body {
   /*background-color: #3B8686;*/
   margin: 0;
   padding: 0;
+  font-family: Muli, sans-serif;
   min-height: 100vh;
   background: rgb(168,219,168);
   background: linear-gradient(25deg, rgba(168,219,168,1) 0%, rgba(121,189,154,1) 35%, rgba(125,185,232,1) 100%);
