@@ -1,31 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import {
-  Grid, Typography, useTheme, makeStyles, Box,
+  Grid, Typography, useTheme, makeStyles, Box, Paper,
 } from '@material-ui/core'
 import { ResponsiveLine } from '@nivo/line'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
   page: {
-    position: 'absolute',
-    margin: '0 !important',
-    left: '0',
-    minWidth: '320px',
-    width: '100%',
-/*  [theme.breakpoints.down('xs')]: {
-      margin: '0 !important',
-      left: '0',
-      minWidth: '320px',
-      width: '100%',
-    },
-    [theme.breakpoints.up('sm')]: {
-      left: '50%',
-      transform: 'translateX(-50%)',
-    },
-*/
+    flexGrow: 1,
+    padding: theme.spacing(2),
     top: '60px',
     color: '#CFF09E',
-    // padding: theme.spacing(1)
   },
   header: {
     color: '#CFF09E',
@@ -33,30 +18,23 @@ const styles = makeStyles((theme) => ({
   footer: {
     color: '#0B486B',
   },
-  container: {
-    width: '100%',
-  },
 
   chartContainer: {
-    width: '100%',
-    height: '100%',
+    height: '260px',
     margin: '0 !important',
+    backgroundColor: '#f3ffe2',
+    padding: theme.spacing(3),
+    borderRadius: theme.spacing(1),
   },
 
   chartRoot: {
-    padding: theme.spacing(4),
-    margin: theme.spacing(1),
-    borderRadius: theme.spacing(1),
-    backgroundColor: '#f3ffe2',
     width: '100%',
-    minWidth: '320px',
-    height: '280px',
-    border: '1px solid #0B486B',
+    height: '330px',
     transition: 'box-shadow 0.3s ease-in-out',
     '&:hover': {
       border: `1px solid ${theme.palette.primary.main}`,
       boxShadow: '0px 5px 15px rgba(0,0,0,0.1)',
-    }
+    },
   },
   toolTip: {
     backgroundColor: 'white',
@@ -69,13 +47,13 @@ const styles = makeStyles((theme) => ({
     fontWeight: 'bold',
     boxShadow: '0px 5px 15px rgba(0,0,0,0.1)',
     marginBottom: theme.spacing(2),
-  }
+  },
 }))
 
 const Home = () => {
   const theme = useTheme()
   const classes = styles()
-  const dark = theme.palette.primary.dark
+  const { dark } = theme.palette.primary
   const [series, setSeries] = useState([])
   const [humiditySeries, setHumiditySeries] = useState([])
   const [pressureSeries, setPressureSeries] = useState([])
@@ -88,6 +66,7 @@ const Home = () => {
         if (response.ok) {
           return response.json()
         }
+        throw Error('Not ok')
       }).then((data) => {
         if (!data) {
           return
@@ -97,7 +76,7 @@ const Home = () => {
           data: data.map((reading) => ({
               x: new Date(reading.dateUpdated),
               y: reading.temperature,
-            }))
+            })),
         }])
 
         setHumiditySeries([{
@@ -122,6 +101,8 @@ const Home = () => {
         if (lastItem) {
           setCurrentTemperature(lastItem.temperature)
         }
+      }).catch(() => {
+        // console.error('Error while loading data')
       })
   }
 
@@ -209,30 +190,29 @@ const Home = () => {
 
   return (
     <div className={classes.page}>
-      <Grid container className={classes.container} spacing={0} justify="center" alignItems="center">
-        <Grid item xs={12} container justify="center" alignItems="center" direction="column">
-          <Typography variant="h4" className={classes.header}>Tommi&apos;s Home Office</Typography>
-          <Box m={2} />
-          <Typography variant="h2">
-            {currentTemperature?.toFixed(1)}
-            °C
-            &nbsp;
-            <span role="img" aria-label="Sweating emoji">
-              🥵
-            </span>
-          </Typography>
-          <Box m={2} />
-        </Grid>
+      <Grid item xs={12} container justify="center" alignItems="center" direction="column">
+        <Typography variant="h4" className={classes.header}>Tommi&apos;s Home Office</Typography>
+        <Box m={2} />
+        <Typography variant="h2">
+          {currentTemperature?.toFixed(1)}
+          °C
+          &nbsp;
+          {(currentTemperature > 26) &&
+          <span role="img" aria-label="Sweating emoji">
+            🥵
+          </span> }
+        </Typography>
+        <Box m={2} />
+      </Grid>
+      <Grid container className={classes.container} spacing={3}>
+
         <Grid
-            xs={8}
+            xs={12}
+            lg={4}
             item
-            container
-            justify="center"
-            alignItems="center"
-            direction="column"
             className={classes.chartRoot}
         >
-          <div className={classes.chartContainer}>
+          <Paper className={classes.chartContainer}>
             <ResponsiveLine
               curve="monotoneX"
               data={series}
@@ -248,18 +228,16 @@ const Home = () => {
               pointSize={0}
               useMesh
             />
-          </div>
+          </Paper>
         </Grid>
         <Grid
             item
-            xs={4}
-            container
-            justify="center"
-            alignItems="center"
-            direction="column"
+            xs={12}
+            sm={6}
+            lg={4}
             className={classes.chartRoot}
         >
-          <div className={classes.chartContainer}>
+          <Paper className={classes.chartContainer}>
             <ResponsiveLine
               curve="monotoneX"
               data={humiditySeries}
@@ -286,18 +264,16 @@ const Home = () => {
               pointSize={0}
               useMesh
             />
-          </div>
+          </Paper>
         </Grid>
         <Grid
             item
-            xs={4}
-            container
-            justify="center"
-            alignItems="center"
-            direction="column"
+            xs={12}
+            sm={6}
+            lg={4}
             className={classes.chartRoot}
         >
-          <div className={classes.chartContainer}>
+          <Paper className={classes.chartContainer}>
             <ResponsiveLine
               curve="monotoneX"
               data={pressureSeries}
@@ -324,7 +300,7 @@ const Home = () => {
               pointSize={0}
               useMesh
             />
-          </div>
+          </Paper>
         </Grid>
         <Grid item xs={12} container justify="center" alignItems="center" direction="column">
           <span className={classes.footer}>Copyright &copy; Tommi Laukkanen</span>
@@ -332,7 +308,6 @@ const Home = () => {
       </Grid>
     </div>
   )
-
 }
 
 export default Home
