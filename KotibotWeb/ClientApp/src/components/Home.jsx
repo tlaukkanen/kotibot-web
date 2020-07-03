@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import {
-  Grid, Typography, useTheme, makeStyles, Box, Paper,
+  Grid, Typography, useTheme, makeStyles, Box, Paper, useMediaQuery,
 } from '@material-ui/core'
 import { ResponsiveLine } from '@nivo/line'
 
@@ -65,6 +65,7 @@ const styles = makeStyles((theme) => ({
 const Home = () => {
   const theme = useTheme()
   const classes = styles()
+  const betweenSmallAndLarge = useMediaQuery(theme.breakpoints.between("sm", "md"))
   const { dark } = theme.palette.primary
   const [series, setSeries] = useState([])
   const [humiditySeries, setHumiditySeries] = useState([])
@@ -205,12 +206,12 @@ const Home = () => {
       <Grid container className={classes.container} spacing={3}>
         <Grid item xs={12} sm={6} className={classes.titleRoot}>
           <Paper className={classes.titleContainer}>
-            <Typography variant="h4" className={classes.header} align="center" >Tommi&apos;s Home Office</Typography>
+            <Typography variant={betweenSmallAndLarge ? "h5" : "h4"} className={classes.header} align="center" >Tommi&apos;s Home Office</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6} className={classes.titleRoot}>
           <Paper className={classes.titleContainer}>
-            <Typography variant="h2" align="center" className={classes.header}>
+            <Typography variant={betweenSmallAndLarge ? "h3" : "h2"} align="center" className={classes.header}>
               {currentTemperature?.toFixed(1)}
               °C
               &nbsp;
