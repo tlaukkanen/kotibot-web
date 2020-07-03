@@ -13,10 +13,26 @@ const styles = makeStyles((theme) => ({
     color: '#CFF09E',
   },
   header: {
-    color: '#CFF09E',
+    color: '#3B8686',
+    position: 'relative',
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
   footer: {
     color: '#0B486B',
+  },
+
+  titleRoot: {
+    width: '100%',
+    height: '140px',
+  },
+
+  titleContainer: {
+    height: '70px',
+    padding: theme.spacing(3),
+    borderRadius: theme.spacing(1),
+    backgroundColor: '#f3ffe266',
+    margin: 'auto',
   },
 
   chartContainer: {
@@ -31,10 +47,6 @@ const styles = makeStyles((theme) => ({
     width: '100%',
     height: '330px',
     transition: 'box-shadow 0.3s ease-in-out',
-    '&:hover': {
-      border: `1px solid ${theme.palette.primary.main}`,
-      boxShadow: '0px 5px 15px rgba(0,0,0,0.1)',
-    },
   },
   toolTip: {
     backgroundColor: 'white',
@@ -190,22 +202,25 @@ const Home = () => {
 
   return (
     <div className={classes.page}>
-      <Grid item xs={12} container justify="center" alignItems="center" direction="column">
-        <Typography variant="h4" className={classes.header}>Tommi&apos;s Home Office</Typography>
-        <Box m={2} />
-        <Typography variant="h2">
-          {currentTemperature?.toFixed(1)}
-          °C
-          &nbsp;
-          {(currentTemperature > 26) &&
-          <span role="img" aria-label="Sweating emoji">
-            🥵
-          </span> }
-        </Typography>
-        <Box m={2} />
-      </Grid>
       <Grid container className={classes.container} spacing={3}>
-
+        <Grid item xs={12} sm={6} className={classes.titleRoot}>
+          <Paper className={classes.titleContainer}>
+            <Typography variant="h4" className={classes.header} align="center" >Tommi&apos;s Home Office</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6} className={classes.titleRoot}>
+          <Paper className={classes.titleContainer}>
+            <Typography variant="h2" align="center" className={classes.header}>
+              {currentTemperature?.toFixed(1)}
+              °C
+              &nbsp;
+              {(currentTemperature > 26) &&
+              <span role="img" aria-label="Sweating emoji">
+                🥵
+              </span> }
+            </Typography>
+          </Paper>
+        </Grid>
         <Grid
             xs={12}
             lg={4}
