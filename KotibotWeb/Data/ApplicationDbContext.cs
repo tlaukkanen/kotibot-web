@@ -1,6 +1,5 @@
 using KotibotWeb.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace KotibotWeb.Data
 {
@@ -12,7 +11,5 @@ namespace KotibotWeb.Data
         }
 
         public DbSet<Measurement> Measurements { get; set; }
-                
     }
-    
 }
