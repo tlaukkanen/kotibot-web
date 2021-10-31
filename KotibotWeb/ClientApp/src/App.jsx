@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import Layout from './components/Layout'
 import Home from './components/Home'
 
@@ -10,7 +10,7 @@ import './custom.css'
 #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 */
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
       primary: {
           main: '#3B8686',

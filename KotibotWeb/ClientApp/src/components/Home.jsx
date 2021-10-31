@@ -324,7 +324,7 @@ const Home = () => {
             />
           </Paper>
         </Grid>
-        <Grid item xs={12} container justify="center" alignItems="center" direction="column">
+        <Grid item xs={12} container justifyContent="center" alignItems="center" direction="column">
           <span className={classes.footer}>Copyright &copy; Tommi Laukkanen</span>
         </Grid>
       </Grid>
