@@ -1,5 +1,4 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
 import Layout from './components/Layout'
 import Home from './components/Home'
@@ -31,7 +30,7 @@ const theme = createTheme({
 const App = () => (
   <ThemeProvider theme={theme}>
     <Layout>
-      <Route exact path="/" component={Home} />
+      <Home />
     </Layout>
   </ThemeProvider>
 )
