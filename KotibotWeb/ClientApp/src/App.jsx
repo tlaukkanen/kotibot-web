@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider, createTheme } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@material-ui/core'
 import Layout from './components/Layout'
 import Home from './components/Home'
 
