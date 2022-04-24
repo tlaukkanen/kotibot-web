@@ -8,7 +8,8 @@ namespace KotibotWeb.Controllers
     using KotibotWeb.Model;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
+  using Microsoft.Extensions.Configuration;
+  using Microsoft.Extensions.Logging;
 
     [ApiController]
     [Route("[controller]")]
@@ -16,13 +17,16 @@ namespace KotibotWeb.Controllers
     {
         private readonly ILogger<MeasurementsController> logger;
         private readonly ApplicationDbContext context;
+        private readonly IConfiguration configuration;
 
         public MeasurementsController(
             ILogger<MeasurementsController> logger,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IConfiguration configuration)
         {
             this.logger = logger;
             this.context = context;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -37,8 +41,13 @@ namespace KotibotWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Measurement measurement)
+        public async Task<ActionResult> Post(Measurement measurement, [FromQuery]string apiKey)
         {
+            if (apiKey != this.configuration["ApiKey"])
+            {
+                return this.BadRequest("Invalid API key");
+            }
+
             this.context.Measurements.Add(measurement);
             _ = await this.context.SaveChangesAsync();
             this.logger.LogInformation($"Measurement {measurement.Id} added");
