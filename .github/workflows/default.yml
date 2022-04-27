@@ -25,6 +25,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'kotibot'
-          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.DEPLOY_PROFILE }}
           package: ./KotibotRelease
       
