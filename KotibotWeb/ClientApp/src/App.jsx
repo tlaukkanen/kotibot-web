@@ -1,8 +1,8 @@
 import React from 'react'
-import { createTheme, ThemeProvider } from '@material-ui/core'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
+
 import Layout from './components/Layout'
 import Home from './components/Home'
-
 import './custom.css'
 
 /*
