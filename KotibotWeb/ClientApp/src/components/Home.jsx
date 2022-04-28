@@ -170,7 +170,7 @@ const Home = () => {
 
   const yScale = {
     type: 'linear',
-    min: 20,
+    min: 18,
     max: 32,
   }
 
