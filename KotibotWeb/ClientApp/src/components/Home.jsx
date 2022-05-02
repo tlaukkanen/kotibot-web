@@ -261,6 +261,10 @@ const Home = () => {
                   anchor: 'top',
                   direction: 'row',
                   justify: false,
+                  itemsSpacing: 0,
+                  itemDirection: 'left-to-right',
+                  itemWidth: 80,
+                  itemHeight: 20,
                 },
               ]}
             />
