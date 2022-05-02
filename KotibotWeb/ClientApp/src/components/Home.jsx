@@ -218,7 +218,7 @@ const Home = () => {
               className={classes.header}
               align="center"
             >
-                Tommi&apos;s Home Office
+                Tommi&apos;s Crib 🏡
             </Typography>
           </Paper>
         </Grid>
