@@ -256,6 +256,13 @@ const Home = () => {
               // lineWidth={1}
               pointSize={0}
               useMesh
+              legends={[
+                {
+                  anchor: 'top',
+                  direction: 'row',
+                  justify: false,
+                },
+              ]}
             />
           </Paper>
         </Grid>
