@@ -85,24 +85,31 @@ const Home = () => {
           return
         }
         setSeries([{
-          id: 'Temperature',
-          data: data.map((reading) => ({
+            id: 'Office',
+            data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
               x: new Date(reading.dateUpdated),
               y: reading.temperature,
             })),
-        }])
+          }, {
+            id: 'Bedroom',
+            data: data.filter((entry) => entry.location === 'Bedroom').map((reading) => ({
+                x: new Date(reading.dateUpdated),
+                y: reading.temperature,
+            })),
+          },
+        ])
 
         setHumiditySeries([{
-          id: 'Humidity',
-          data: data.map((reading) => ({
+          id: 'Office',
+          data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
               x: new Date(reading.dateUpdated),
               y: reading.humidity,
             })),
         }])
 
         setPressureSeries([{
-          id: 'Pressure',
-          data: data.map((reading) => ({
+          id: 'Office',
+          data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
               x: new Date(reading.dateUpdated),
               y: reading.pressure,
             })),

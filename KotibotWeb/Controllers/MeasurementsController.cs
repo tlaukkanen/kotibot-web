@@ -35,7 +35,8 @@ namespace KotibotWeb.Controllers
             var now = DateTimeOffset.UtcNow;
 
             var measurements = await this.context.Measurements
-                .Where(m => EF.Functions.DateDiffHour(m.DateUpdated, now) < 48).ToArrayAsync();
+                .Where(m => EF.Functions.DateDiffHour(m.DateUpdated, now) < 48)
+                .ToArrayAsync();
 
             return measurements;
         }
