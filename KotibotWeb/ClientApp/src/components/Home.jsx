@@ -246,7 +246,7 @@ const Home = () => {
               curve="monotoneX"
               data={series}
               theme={chartTheme()}
-              colors={[dark]}
+              // colors={[dark]}
               margin={margin}
               yScale={yScale}
               xScale={xScale}
@@ -271,7 +271,7 @@ const Home = () => {
               curve="monotoneX"
               data={humiditySeries}
               theme={chartTheme()}
-              colors={[dark]}
+              // colors={[dark]}
               margin={margin}
               yScale={{
                 type: 'linear',
@@ -307,7 +307,7 @@ const Home = () => {
               curve="monotoneX"
               data={pressureSeries}
               theme={chartTheme()}
-              colors={[dark]}
+              // colors={[dark]}
               margin={margin}
               yScale={{
                 type: 'linear',
