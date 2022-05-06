@@ -117,7 +117,7 @@ const Home = () => {
 
         // Get last value as current temperature
 
-        const lastItem = data.pop()
+        const lastItem = data.filter((entry) => entry.location === 'Office').pop()
         if (lastItem) {
           setCurrentTemperature(lastItem.temperature)
         }
@@ -183,7 +183,7 @@ const Home = () => {
 
   const xScale = {
     type: 'time',
-    precision: 'hour',
+    precision: 'minute',
     format: 'native',
   }
 
@@ -224,15 +224,20 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} sm={6} className={classes.titleRoot}>
           <Paper className={classes.titleContainer}>
-            <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center" className={classes.header}>
-              {currentTemperature?.toFixed(1)}
-              °C
-              &nbsp;
-              {(currentTemperature > 26) &&
-              <span role="img" aria-label="Sweating emoji">
-                🥵
-              </span> }
-            </Typography>
+            <div className={classes.header}>
+              <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
+                Office
+              </Typography>
+              <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center">
+                {currentTemperature?.toFixed(1)}
+                °C
+                &nbsp;
+                {(currentTemperature > 26) &&
+                <span role="img" aria-label="Sweating emoji">
+                  🥵
+                </span> }
+              </Typography>
+            </div>
           </Paper>
         </Grid>
         <Grid
