@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import {
   Grid, Typography, useTheme, makeStyles, Paper, useMediaQuery,
 } from '@material-ui/core'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ResponsiveLine } from '@nivo/line'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
@@ -209,149 +210,156 @@ const Home = () => {
   }
 
   return (
-    <div className={classes.page}>
-      <Grid container className={classes.container} spacing={3}>
-        <Grid item xs={12} sm={6} className={classes.titleRoot}>
-          <Paper className={classes.titleContainer}>
-            <Typography
-              variant={betweenSmallAndLarge ? 'h5' : 'h4'}
-              className={classes.header}
-              align="center"
-            >
-                Tommi&apos;s Crib 🏡
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6} className={classes.titleRoot}>
-          <Paper className={classes.titleContainer}>
-            <div className={classes.header}>
-              <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
-                Office
+    <HelmetProvider>
+      <div className={classes.page}>
+        <Grid container className={classes.container} spacing={3}>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+            <Paper className={classes.titleContainer}>
+              <Typography
+                variant={betweenSmallAndLarge ? 'h5' : 'h4'}
+                className={classes.header}
+                align="center"
+              >
+                  Tommi&apos;s Crib 🏡
               </Typography>
-              <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center">
-                {currentTemperature?.toFixed(1)}
-                °C
-                &nbsp;
-                {(currentTemperature > 26) &&
-                <span role="img" aria-label="Sweating emoji">
-                  🥵
-                </span> }
-              </Typography>
-            </div>
-          </Paper>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+            <Paper className={classes.titleContainer}>
+              <div className={classes.header}>
+                <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
+                  Office
+                </Typography>
+                <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center">
+                  {currentTemperature?.toFixed(1)}
+                  °C
+                  &nbsp;
+                  {(currentTemperature > 26) &&
+                  <span role="img" aria-label="Sweating emoji">
+                    🥵
+                  </span> }
+                </Typography>
+              </div>
+            </Paper>
+          </Grid>
+          <Grid
+              xs={12}
+              lg={4}
+              item
+              className={classes.chartRoot}
+          >
+            <Paper className={classes.chartContainer}>
+              <ResponsiveLine
+                curve="monotoneX"
+                data={series}
+                theme={chartTheme()}
+                // colors={[dark]}
+                margin={margin}
+                yScale={yScale}
+                xScale={xScale}
+                xFormat="time:%H:%M"
+                axisBottom={axisBottom}
+                axisLeft={axisLeft}
+                // lineWidth={1}
+                pointSize={0}
+                useMesh
+                legends={[
+                  {
+                    anchor: 'top',
+                    direction: 'row',
+                    justify: false,
+                    itemsSpacing: 0,
+                    itemDirection: 'left-to-right',
+                    itemWidth: 80,
+                    itemHeight: 20,
+                  },
+                ]}
+              />
+            </Paper>
+          </Grid>
+          <Grid
+              item
+              xs={12}
+              sm={6}
+              lg={4}
+              className={classes.chartRoot}
+          >
+            <Paper className={classes.chartContainer}>
+              <ResponsiveLine
+                curve="monotoneX"
+                data={humiditySeries}
+                theme={chartTheme()}
+                // colors={[dark]}
+                margin={margin}
+                yScale={{
+                  type: 'linear',
+                  min: 0,
+                  max: 100,
+                }}
+                xScale={xScale}
+                xFormat="time:%H:%M"
+                axisBottom={axisBottom}
+                axisLeft={{
+                  legend: 'Humidity %',
+                  legendOffset: -32,
+                  legendPosition: 'middle',
+                  tickSize: 2,
+                  tickValues: 2,
+                  tickPadding: 4,
+                }}
+                // lineWidth={1}
+                pointSize={0}
+                useMesh
+              />
+            </Paper>
+          </Grid>
+          <Grid
+              item
+              xs={12}
+              sm={6}
+              lg={4}
+              className={classes.chartRoot}
+          >
+            <Paper className={classes.chartContainer}>
+              <ResponsiveLine
+                curve="monotoneX"
+                data={pressureSeries}
+                theme={chartTheme()}
+                // colors={[dark]}
+                margin={margin}
+                yScale={{
+                  type: 'linear',
+                  min: 975,
+                  max: 1025,
+                }}
+                xScale={xScale}
+                xFormat="time:%H:%M"
+                axisBottom={axisBottom}
+                axisLeft={{
+                  legend: 'Pressure hPa',
+                  legendOffset: -36,
+                  legendPosition: 'middle',
+                  tickSize: 2,
+                  tickValues: 2,
+                  tickPadding: 4,
+                }}
+                // lineWidth={1}
+                pointSize={0}
+                useMesh
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} container justifyContent="center" alignItems="center" direction="column">
+            <span className={classes.footer}>Copyright &copy; Tommi Laukkanen</span>
+          </Grid>
         </Grid>
-        <Grid
-            xs={12}
-            lg={4}
-            item
-            className={classes.chartRoot}
-        >
-          <Paper className={classes.chartContainer}>
-            <ResponsiveLine
-              curve="monotoneX"
-              data={series}
-              theme={chartTheme()}
-              // colors={[dark]}
-              margin={margin}
-              yScale={yScale}
-              xScale={xScale}
-              xFormat="time:%H:%M"
-              axisBottom={axisBottom}
-              axisLeft={axisLeft}
-              // lineWidth={1}
-              pointSize={0}
-              useMesh
-              legends={[
-                {
-                  anchor: 'top',
-                  direction: 'row',
-                  justify: false,
-                  itemsSpacing: 0,
-                  itemDirection: 'left-to-right',
-                  itemWidth: 80,
-                  itemHeight: 20,
-                },
-              ]}
-            />
-          </Paper>
-        </Grid>
-        <Grid
-            item
-            xs={12}
-            sm={6}
-            lg={4}
-            className={classes.chartRoot}
-        >
-          <Paper className={classes.chartContainer}>
-            <ResponsiveLine
-              curve="monotoneX"
-              data={humiditySeries}
-              theme={chartTheme()}
-              // colors={[dark]}
-              margin={margin}
-              yScale={{
-                type: 'linear',
-                min: 0,
-                max: 100,
-              }}
-              xScale={xScale}
-              xFormat="time:%H:%M"
-              axisBottom={axisBottom}
-              axisLeft={{
-                legend: 'Humidity %',
-                legendOffset: -32,
-                legendPosition: 'middle',
-                tickSize: 2,
-                tickValues: 2,
-                tickPadding: 4,
-              }}
-              // lineWidth={1}
-              pointSize={0}
-              useMesh
-            />
-          </Paper>
-        </Grid>
-        <Grid
-            item
-            xs={12}
-            sm={6}
-            lg={4}
-            className={classes.chartRoot}
-        >
-          <Paper className={classes.chartContainer}>
-            <ResponsiveLine
-              curve="monotoneX"
-              data={pressureSeries}
-              theme={chartTheme()}
-              // colors={[dark]}
-              margin={margin}
-              yScale={{
-                type: 'linear',
-                min: 975,
-                max: 1025,
-              }}
-              xScale={xScale}
-              xFormat="time:%H:%M"
-              axisBottom={axisBottom}
-              axisLeft={{
-                legend: 'Pressure hPa',
-                legendOffset: -36,
-                legendPosition: 'middle',
-                tickSize: 2,
-                tickValues: 2,
-                tickPadding: 4,
-              }}
-              // lineWidth={1}
-              pointSize={0}
-              useMesh
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={12} container justifyContent="center" alignItems="center" direction="column">
-          <span className={classes.footer}>Copyright &copy; Tommi Laukkanen</span>
-        </Grid>
-      </Grid>
-    </div>
+        <Helmet>
+          <title>
+            {`${currentTemperature?.toFixed(1)} °C KotiBot`}
+          </title>
+        </Helmet>
+      </div>
+    </HelmetProvider>
   )
 }
 

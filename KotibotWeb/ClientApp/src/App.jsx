@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import Layout from './components/Layout'
 import Home from './components/Home'
 import './custom.css'
+import TopMenu from './components/TopMenu'
 
 /*
 #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
@@ -30,6 +31,7 @@ const theme = createTheme({
 const App = () => (
   <ThemeProvider theme={theme}>
     <Layout>
+      <TopMenu />
       <Home />
     </Layout>
   </ThemeProvider>
