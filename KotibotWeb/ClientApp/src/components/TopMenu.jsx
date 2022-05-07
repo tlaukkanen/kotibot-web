@@ -36,6 +36,22 @@ const styles = makeStyles((theme) => ({
   timespanContainer: {
     marginLeft: 'auto',
   },
+  headerTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    [theme.breakpoints.down('xs')]: {
+      left: '100%',
+      marginLeft: '-200px',
+    },
+    [theme.breakpoints.up('sm')]: {
+      left: '50%',
+      marginLeft: '-100px',
+    },
+    width: '200px',
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    position: 'absolute',
+  },
 }))
 
 const TopMenu = () => {
@@ -50,6 +66,11 @@ const TopMenu = () => {
         <Typography variant="h6">
           KotiBot
         </Typography>
+        <div className={classes.headerTitle}>
+          <Typography variant="h5">
+            Tommi&apos;s Crib 🏡
+          </Typography>
+        </div>
 
         <Box className={classes.timespanContainer} sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Button edge="start" aria-label="date range" startIcon={<DateRangeIcon />} variant="outlined">

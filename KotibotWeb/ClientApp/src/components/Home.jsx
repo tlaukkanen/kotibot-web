@@ -72,6 +72,7 @@ const Home = () => {
   const [humiditySeries, setHumiditySeries] = useState([])
   const [pressureSeries, setPressureSeries] = useState([])
   const [currentTemperature, setCurrentTemperature] = useState()
+  const [currentHumidity, setCurrentHumidity] = useState()
 
   const loadSeriesData = () => {
     const url = '/measurements'
@@ -116,11 +117,11 @@ const Home = () => {
             })),
         }])
 
-        // Get last value as current temperature
-
+        // Get last value as current temperature and humidity
         const lastItem = data.filter((entry) => entry.location === 'Office').pop()
         if (lastItem) {
           setCurrentTemperature(lastItem.temperature)
+          setCurrentHumidity(lastItem.humidity)
         }
       }).catch(() => {
         // console.error('Error while loading data')
@@ -213,18 +214,7 @@ const Home = () => {
     <HelmetProvider>
       <div className={classes.page}>
         <Grid container className={classes.container} spacing={3}>
-          <Grid item xs={12} sm={6} className={classes.titleRoot}>
-            <Paper className={classes.titleContainer}>
-              <Typography
-                variant={betweenSmallAndLarge ? 'h5' : 'h4'}
-                className={classes.header}
-                align="center"
-              >
-                  Tommi&apos;s Crib 🏡
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+        <Grid item xs={12} sm={6} className={classes.titleRoot}>
             <Paper className={classes.titleContainer}>
               <div className={classes.header}>
                 <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
@@ -235,6 +225,24 @@ const Home = () => {
                   °C
                   &nbsp;
                   {(currentTemperature > 26) &&
+                  <span role="img" aria-label="Sweating emoji">
+                    🥵
+                  </span> }
+                </Typography>
+              </div>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+            <Paper className={classes.titleContainer}>
+              <div className={classes.header}>
+                <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
+                  Indoors Humidity
+                </Typography>
+                <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center">
+                  {currentHumidity}
+                  %
+                  &nbsp;
+                  {(currentHumidity > 70) &&
                   <span role="img" aria-label="Sweating emoji">
                     🥵
                   </span> }
@@ -347,6 +355,28 @@ const Home = () => {
                 pointSize={0}
                 useMesh
               />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+            <Paper className={classes.titleContainer}>
+              <Typography
+                variant={betweenSmallAndLarge ? 'h5' : 'h4'}
+                className={classes.header}
+                align="center"
+              >
+                  🤖 Telegram bot: ONLINE
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
+            <Paper className={classes.titleContainer}>
+              <Typography
+                variant={betweenSmallAndLarge ? 'h5' : 'h4'}
+                className={classes.header}
+                align="center"
+              >
+                  🩺 No anomalies detected
+              </Typography>
             </Paper>
           </Grid>
           <Grid item xs={12} container justifyContent="center" alignItems="center" direction="column">
