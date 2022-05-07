@@ -239,7 +239,7 @@ const Home = () => {
                   Indoors Humidity
                 </Typography>
                 <Typography variant={betweenSmallAndLarge ? 'h3' : 'h2'} align="center">
-                  {currentHumidity}
+                  {currentHumidity?.toFixed(1)}
                   %
                   &nbsp;
                   {(currentHumidity > 70) &&
