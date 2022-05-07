@@ -1,6 +1,6 @@
 {
-  "short_name": "KotibotWeb",
-  "name": "KotibotWeb",
+  "short_name": "Kotibot",
+  "name": "Kotibot",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,7 +9,7 @@
     }
   ],
   "start_url": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }

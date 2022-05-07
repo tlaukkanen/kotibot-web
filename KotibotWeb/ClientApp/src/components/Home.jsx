@@ -406,7 +406,7 @@ function Home() {
         </Grid>
         <Helmet>
           <title>
-            {`${currentTemperature?.toFixed(1)} °C KotiBot`}
+            {`${currentTemperature?.toFixed(1)} °C Kotibot`}
           </title>
         </Helmet>
       </div>
