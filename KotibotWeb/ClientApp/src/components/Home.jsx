@@ -214,7 +214,7 @@ const Home = () => {
     <HelmetProvider>
       <div className={classes.page}>
         <Grid container className={classes.container} spacing={3}>
-        <Grid item xs={12} sm={6} className={classes.titleRoot}>
+          <Grid item xs={12} sm={6} className={classes.titleRoot}>
             <Paper className={classes.titleContainer}>
               <div className={classes.header}>
                 <Typography variant={betweenSmallAndLarge ? 'h6' : 'h5'} align="center">
