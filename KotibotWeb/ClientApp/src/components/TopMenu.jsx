@@ -1,8 +1,9 @@
-import { AppBar, Box, Button, IconButton, Paper, Toolbar, Typography } from '@material-ui/core'
+import {
+  AppBar, Box, Button, IconButton, makeStyles, Toolbar, Typography,
+} from '@material-ui/core'
 import React from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
 import DateRangeIcon from '@material-ui/icons/DateRange'
-import { makeStyles } from '@material-ui/styles'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
