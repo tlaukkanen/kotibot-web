@@ -1,3 +1,5 @@
+# This is now deprecated. Using the GitHub Actions now. Leaving this here just for reference.
+
 trigger:
   branches:
     include:
@@ -30,7 +32,12 @@ stages:
       inputs:
         version: '3.1.x'
         packageType: sdk
-        
+
+    - task: NodeTool@0
+      displayName: "Node 16.x"
+      inputs:
+        versionSpec: '16.x'
+
     # Build
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'

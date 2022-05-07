@@ -54,7 +54,7 @@ const styles = makeStyles((theme) => ({
   },
 }))
 
-const TopMenu = () => {
+function TopMenu() {
   const classes = styles()
 
   return (
@@ -73,9 +73,9 @@ const TopMenu = () => {
         </div>
 
         <Box className={classes.timespanContainer} sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button edge="start" aria-label="date range" startIcon={<DateRangeIcon />} variant="outlined">
-              <Typography variant="subtitle1">Last 48 hours</Typography>
-            </Button>
+          <Button edge="start" aria-label="date range" startIcon={<DateRangeIcon />} variant="outlined">
+            <Typography variant="subtitle1">Last 48 hours</Typography>
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>

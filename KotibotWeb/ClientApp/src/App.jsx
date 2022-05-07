@@ -28,13 +28,15 @@ const theme = createTheme({
   },
 })
 
-const App = () => (
+function App() {
+  return (
   <ThemeProvider theme={theme}>
     <Layout>
       <TopMenu />
       <Home />
     </Layout>
   </ThemeProvider>
-)
+  )
+}
 
 export default App

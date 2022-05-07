@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import {
-  Grid, Typography, useTheme, makeStyles, Paper, useMediaQuery,
+  Grid, Typography, useTheme, makeStyles, Paper, useMediaQuery, CircularProgress,
 } from '@material-ui/core'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ResponsiveLine } from '@nivo/line'
@@ -61,9 +61,26 @@ const styles = makeStyles((theme) => ({
     boxShadow: '0px 5px 15px rgba(0,0,0,0.1)',
     marginBottom: theme.spacing(2),
   },
+  loadingPanel: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  },
+  loadingContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100px',
+    width: '100px',
+    backgroundColor: '#A8DBA8bb',
+    borderRadius: theme.spacing(1),
+    padding: theme.spacing(2),
+  },
 }))
 
-const Home = () => {
+function Home() {
   const theme = useTheme()
   const classes = styles()
   const betweenSmallAndLarge = useMediaQuery(theme.breakpoints.between('sm', 'md'))
@@ -73,6 +90,7 @@ const Home = () => {
   const [pressureSeries, setPressureSeries] = useState([])
   const [currentTemperature, setCurrentTemperature] = useState()
   const [currentHumidity, setCurrentHumidity] = useState()
+  const [isLoading, setIsLoading] = useState(true)
 
   const loadSeriesData = () => {
     const url = '/measurements'
@@ -87,34 +105,34 @@ const Home = () => {
           return
         }
         setSeries([{
-            id: 'Office',
-            data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
-              x: new Date(reading.dateUpdated),
-              y: reading.temperature,
-            })),
-          }, {
-            id: 'Bedroom',
-            data: data.filter((entry) => entry.location === 'Bedroom').map((reading) => ({
-                x: new Date(reading.dateUpdated),
-                y: reading.temperature,
-            })),
-          },
+          id: 'Office',
+          data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
+            x: new Date(reading.dateUpdated),
+            y: reading.temperature,
+          })),
+        }, {
+          id: 'Bedroom',
+          data: data.filter((entry) => entry.location === 'Bedroom').map((reading) => ({
+            x: new Date(reading.dateUpdated),
+            y: reading.temperature,
+          })),
+        },
         ])
 
         setHumiditySeries([{
           id: 'Office',
           data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
-              x: new Date(reading.dateUpdated),
-              y: reading.humidity,
-            })),
+            x: new Date(reading.dateUpdated),
+            y: reading.humidity,
+          })),
         }])
 
         setPressureSeries([{
           id: 'Office',
           data: data.filter((entry) => entry.location === 'Office').map((reading) => ({
-              x: new Date(reading.dateUpdated),
-              y: reading.pressure,
-            })),
+            x: new Date(reading.dateUpdated),
+            y: reading.pressure,
+          })),
         }])
 
         // Get last value as current temperature and humidity
@@ -123,8 +141,11 @@ const Home = () => {
           setCurrentTemperature(lastItem.temperature)
           setCurrentHumidity(lastItem.humidity)
         }
+
+        setIsLoading(false)
       }).catch(() => {
         // console.error('Error while loading data')
+        setIsLoading(false)
       })
   }
 
@@ -139,43 +160,43 @@ const Home = () => {
   }, [])
 
   const chartTheme = useCallback(() => ({
-      grid: {
-        line: {
-          stroke: 'rgba(0,0,0,0.04)',
+    grid: {
+      line: {
+        stroke: 'rgba(0,0,0,0.04)',
+      },
+    },
+    axis: {
+      legend: {
+        text: {
+          fill: dark,
+          fontSize: 12,
         },
       },
-      axis: {
-        legend: {
-          text: {
-            fill: dark,
-            fontSize: 12,
-          },
+      ticks: {
+        text: {
+          fill: 'rgba(0,0,0,0.3)',
+          fontSize: 12,
         },
-        ticks: {
-          text: {
-            fill: 'rgba(0,0,0,0.3)',
-            fontSize: 12,
-          },
-          line: {
-            stroke: '#0B486B',
-            strokeWidth: 1,
-          },
-        },
-        domain: {
-          line: {
-            stroke: 'rgba(0,0,0,0.1)',
-            strokeWidth: 1,
-          },
-        },
-      },
-      crosshair: {
         line: {
-          stroke: 'rgba(0,0,0,0.5)',
+          stroke: '#0B486B',
           strokeWidth: 1,
-          strokeOpacity: 0.35,
         },
       },
-    }), [dark])
+      domain: {
+        line: {
+          stroke: 'rgba(0,0,0,0.1)',
+          strokeWidth: 1,
+        },
+      },
+    },
+    crosshair: {
+      line: {
+        stroke: 'rgba(0,0,0,0.5)',
+        strokeWidth: 1,
+        strokeOpacity: 0.35,
+      },
+    },
+  }), [dark])
 
   const yScale = {
     type: 'linear',
@@ -225,9 +246,9 @@ const Home = () => {
                   °C
                   &nbsp;
                   {(currentTemperature > 26) &&
-                  <span role="img" aria-label="Sweating emoji">
-                    🥵
-                  </span> }
+                    <span role="img" aria-label="Sweating emoji">
+                      🥵
+                    </span>}
                 </Typography>
               </div>
             </Paper>
@@ -243,18 +264,18 @@ const Home = () => {
                   %
                   &nbsp;
                   {(currentHumidity > 70) &&
-                  <span role="img" aria-label="Sweating emoji">
-                    🥵
-                  </span> }
+                    <span role="img" aria-label="Sweating emoji">
+                      🥵
+                    </span>}
                 </Typography>
               </div>
             </Paper>
           </Grid>
           <Grid
-              xs={12}
-              lg={4}
-              item
-              className={classes.chartRoot}
+            xs={12}
+            lg={4}
+            item
+            className={classes.chartRoot}
           >
             <Paper className={classes.chartContainer}>
               <ResponsiveLine
@@ -286,11 +307,11 @@ const Home = () => {
             </Paper>
           </Grid>
           <Grid
-              item
-              xs={12}
-              sm={6}
-              lg={4}
-              className={classes.chartRoot}
+            item
+            xs={12}
+            sm={6}
+            lg={4}
+            className={classes.chartRoot}
           >
             <Paper className={classes.chartContainer}>
               <ResponsiveLine
@@ -322,11 +343,11 @@ const Home = () => {
             </Paper>
           </Grid>
           <Grid
-              item
-              xs={12}
-              sm={6}
-              lg={4}
-              className={classes.chartRoot}
+            item
+            xs={12}
+            sm={6}
+            lg={4}
+            className={classes.chartRoot}
           >
             <Paper className={classes.chartContainer}>
               <ResponsiveLine
@@ -364,7 +385,7 @@ const Home = () => {
                 className={classes.header}
                 align="center"
               >
-                  🤖 Telegram bot: ONLINE
+                🤖 Telegram bot: ONLINE
               </Typography>
             </Paper>
           </Grid>
@@ -375,7 +396,7 @@ const Home = () => {
                 className={classes.header}
                 align="center"
               >
-                  🩺 No anomalies detected
+                🩺 No anomalies detected
               </Typography>
             </Paper>
           </Grid>
@@ -389,6 +410,15 @@ const Home = () => {
           </title>
         </Helmet>
       </div>
+      {isLoading &&
+        <div className={classes.loadingPanel}>
+          <Paper className={classes.loadingContainer}>
+            <CircularProgress />
+            <Typography variant="h6" align="center">
+              Loading...
+            </Typography>
+          </Paper>
+        </div>}
     </HelmetProvider>
   )
 }
