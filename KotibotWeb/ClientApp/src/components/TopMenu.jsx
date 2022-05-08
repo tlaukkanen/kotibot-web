@@ -1,7 +1,7 @@
 import {
-  AppBar, Box, Button, IconButton, makeStyles, Toolbar, Typography,
+  AppBar, Box, Button, IconButton, List, ListItem, ListItemText, makeStyles, Menu, MenuItem, Toolbar, Typography,
 } from '@material-ui/core'
-import React from 'react'
+import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 
@@ -54,8 +54,32 @@ const styles = makeStyles((theme) => ({
   },
 }))
 
+const timeRangeOptions = [
+  'Last 24 hours',
+  'Last 48 hours',
+  'Last 7 days',
+  'Last 30 days',
+]
+
 function TopMenu() {
   const classes = styles()
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [selectedIndex, setSelectedIndex] = useState(1)
+
+  const handleClickTimeRangeItem = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const handleCloseTimeRange = () => {
+    setAnchorEl(null)
+  }
+
+  const handleChangeTimeRange = (event, index) => {
+    setSelectedIndex(index)
+    handleCloseTimeRange()
+    // eslint-disable-next-line no-alert
+    alert('Time range feature in progress 🤓')
+  }
 
   return (
     <AppBar position="static" className={classes.appbar}>
@@ -73,9 +97,31 @@ function TopMenu() {
         </div>
 
         <Box className={classes.timespanContainer} sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <Button edge="start" aria-label="date range" startIcon={<DateRangeIcon />} variant="outlined">
-            <Typography variant="subtitle1">Last 48 hours</Typography>
-          </Button>
+          <List component="nav" aria-label="date range">
+            <ListItem
+              button
+              onClick={handleClickTimeRangeItem}
+            >
+              <ListItemText primary="Time range" secondary={timeRangeOptions[selectedIndex]} />
+            </ListItem>
+          </List>
+          <Menu
+            id="time-range-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleCloseTimeRange}
+          >
+            {timeRangeOptions.map((option, index) => (
+              <MenuItem
+                key={option}
+                selected={index === selectedIndex}
+                onClick={(event) => handleChangeTimeRange(event, index)}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>
