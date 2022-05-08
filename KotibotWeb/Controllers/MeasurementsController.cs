@@ -30,15 +30,22 @@ namespace KotibotWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Measurement>> Get()
+        public async Task<ActionResult<IEnumerable<Measurement>>> Get([FromQuery] int last)
         {
+            if(last <= 0 || last > 168)
+            {
+                return new BadRequestObjectResult("Time range must be between 1 and 720 hours");
+            }
+
             var now = DateTimeOffset.UtcNow;
 
-            var measurements = await this.context.Measurements
-                .Where(m => EF.Functions.DateDiffHour(m.DateUpdated, now) < 48)
+            IEnumerable<Measurement> measurements;
+            
+            measurements = await this.context.Measurements
+                .Where(m => EF.Functions.DateDiffHour(m.DateUpdated, now) < last)
                 .ToArrayAsync();
-
-            return measurements;
+           
+            return new OkObjectResult(measurements);
         }
 
         [HttpPost]

@@ -4,6 +4,7 @@ import {
 } from '@material-ui/core'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { ResponsiveLine } from '@nivo/line'
+import PropTypes from 'prop-types'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
@@ -80,7 +81,7 @@ const styles = makeStyles((theme) => ({
   },
 }))
 
-function Home() {
+function Home({ timeRangeHours }) {
   const theme = useTheme()
   const classes = styles()
   const betweenSmallAndLarge = useMediaQuery(theme.breakpoints.between('sm', 'md'))
@@ -93,7 +94,10 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true)
 
   const loadSeriesData = () => {
-    const url = '/measurements'
+    if (timeRangeHours <= 0) {
+      return
+    }
+    const url = `/measurements?last=${timeRangeHours}`
     fetch(url)
       .then((response) => {
         if (response.ok) {
@@ -156,8 +160,8 @@ function Home() {
     const interval = setInterval(() => {
       loadSeriesData()
     }, fiveMinutesInMs)
-    return () => loadSeriesData(interval)
-  }, [])
+    return () => clearInterval(interval)
+  }, [timeRangeHours])
 
   const chartTheme = useCallback(() => ({
     grid: {
@@ -421,6 +425,10 @@ function Home() {
         </div>}
     </HelmetProvider>
   )
+}
+
+Home.propTypes = {
+  timeRangeHours: PropTypes.number.isRequired,
 }
 
 export default Home

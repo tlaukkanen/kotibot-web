@@ -2,6 +2,7 @@ import {
   AppBar, Box, Button, IconButton, makeStyles, Menu, MenuItem, Toolbar, Typography,
 } from '@material-ui/core'
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import MenuIcon from '@material-ui/icons/Menu'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 
@@ -58,10 +59,16 @@ const timeRangeOptions = [
   'Last 24 hours',
   'Last 48 hours',
   'Last 7 days',
-  'Last 30 days',
 ]
 
-function TopMenu() {
+const timeRangeHours = [
+  24,
+  48,
+  168,
+  720,
+]
+
+function TopMenu({ setTimeRangeHours }) {
   const classes = styles()
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(1)
@@ -76,9 +83,8 @@ function TopMenu() {
 
   const handleChangeTimeRange = (event, index) => {
     setSelectedIndex(index)
+    setTimeRangeHours(timeRangeHours[index])
     handleCloseTimeRange()
-    // eslint-disable-next-line no-alert
-    alert('Time range feature in progress 🤓')
   }
 
   return (
@@ -127,6 +133,10 @@ function TopMenu() {
       </Toolbar>
     </AppBar>
   )
+}
+
+TopMenu.propTypes = {
+  setTimeRangeHours: PropTypes.func.isRequired,
 }
 
 export default TopMenu

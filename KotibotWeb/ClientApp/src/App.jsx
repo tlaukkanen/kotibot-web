@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 
 import Layout from './components/Layout'
@@ -29,11 +29,13 @@ const theme = createTheme({
 })
 
 function App() {
+  const [timeRangeHours, setTimeRangeHours] = useState(48)
+
   return (
   <ThemeProvider theme={theme}>
     <Layout>
-      <TopMenu />
-      <Home />
+      <TopMenu setTimeRangeHours={setTimeRangeHours} />
+      <Home timeRangeHours={timeRangeHours} />
     </Layout>
   </ThemeProvider>
   )
