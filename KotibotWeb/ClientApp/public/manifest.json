@@ -10,8 +10,8 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": "/",
+  "start_url": ".",
   "display": "fullscreen",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#CFF09E",
+  "background_color": "#0B486B"
 }
