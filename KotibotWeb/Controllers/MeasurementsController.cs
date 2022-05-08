@@ -32,7 +32,7 @@ namespace KotibotWeb.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Measurement>>> Get([FromQuery] int last)
         {
-            if(last <= 0 || last > 168)
+            if(last <= 0 || last > 48)
             {
                 return new BadRequestObjectResult("Time range must be between 1 and 720 hours");
             }

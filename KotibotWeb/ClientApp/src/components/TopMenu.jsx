@@ -58,14 +58,11 @@ const styles = makeStyles((theme) => ({
 const timeRangeOptions = [
   'Last 24 hours',
   'Last 48 hours',
-  'Last 7 days',
 ]
 
 const timeRangeHours = [
   24,
   48,
-  168,
-  720,
 ]
 
 function TopMenu({ setTimeRangeHours }) {
