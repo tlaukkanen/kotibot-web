@@ -1,8 +1,9 @@
 import {
-  AppBar, Box, IconButton, List, ListItem, ListItemText, makeStyles, Menu, MenuItem, Toolbar, Typography,
+  AppBar, Box, Button, IconButton, makeStyles, Menu, MenuItem, Toolbar, Typography,
 } from '@material-ui/core'
 import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
+import DateRangeIcon from '@material-ui/icons/DateRange'
 
 // #CFF09E,#A8DBA8,#79BD9A,#3B8686,#0B486B
 const styles = makeStyles((theme) => ({
@@ -96,14 +97,15 @@ function TopMenu() {
         </div>
 
         <Box className={classes.timespanContainer} sx={{ display: { xs: 'none', sm: 'block' } }}>
-          <List component="nav" aria-label="date range">
-            <ListItem
-              button
-              onClick={handleClickTimeRangeItem}
-            >
-              <ListItemText primary="Time range" secondary={timeRangeOptions[selectedIndex]} />
-            </ListItem>
-          </List>
+          <Button
+            edge="start"
+            aria-label="date range"
+            startIcon={<DateRangeIcon />}
+            variant="outlined"
+            onClick={handleClickTimeRangeItem}
+          >
+            <Typography variant="subtitle1">{timeRangeOptions[selectedIndex]}</Typography>
+          </Button>
           <Menu
             id="time-range-menu"
             anchorEl={anchorEl}
