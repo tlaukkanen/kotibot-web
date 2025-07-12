@@ -5,8 +5,8 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.3",
-    "@nivo/core": "0.79.0",
-    "@nivo/line": "0.79.1",
+    "@nivo/core": "0.85.1",
+    "@nivo/line": "0.85.1",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
